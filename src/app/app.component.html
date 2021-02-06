@@ -1,0 +1,27 @@
+<h1>Lights out</h1>
+
+<form (ngSubmit)="apply()" class="edit collum" >
+
+  <label for="widthInput">Width</label>
+  <input type = "number" id="widthInput" [(ngModel)]="width" name="width">
+
+
+  <label for="heihtInput">Height</label>
+  <input type = "number" id="heihtInput" [(ngModel)]="height" name="height">
+
+  <button>Apply</button>
+</form>
+
+<div *ngFor="let x of board.getBoard() ;let ix = index" class="row">
+  <div *ngFor="let y of x ;let iy = index">
+    <span *ngIf="y == true" class="collum">
+      <div class="box active" (click)="clickOnTile(ix,iy)"></div>
+    </span>
+    <span *ngIf="y == false" class="collum">
+      <div class="box inactive" (click)="clickOnTile(ix,iy)"></div>
+    </span>
+
+  </div>
+</div>
+
+<div *ngIf="board.checkVictory() == true" class="win">you win</div>

@@ -1,0 +1,33 @@
+.collum{
+
+  display: flex;
+  flex-direction: column;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+}
+
+.edit{
+  width: 20%;
+}
+
+.box{
+  width: 10mm;
+  height: 10mm;
+
+}
+
+.active{
+  background-color: #e1efb7;
+}
+
+.inactive{
+  background-color: #292929;
+}
+
+.win{
+  color: #3cff70;
+  font-size: 3cm;
+}
