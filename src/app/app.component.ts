@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Board} from "./board";
 
 @Component({
   selector: 'app-root',
@@ -11,70 +12,31 @@ export class AppComponent {
 
   @Input('ngModel')
   width: any;
-  height : any;
+  height: any;
+  turnCounter = 0;
+  bestScore = 0;
+  board = new Board(5, 5);
 
-  board = new Board(5,5);
+  apply() {
 
-  apply(){
-    this.board = new Board(this.width,this.height);
+    this.board = new Board(this.width, this.height);
+    this.turnCounter = 0;
+
   }
 
 
-  clickOnTile(x : number,y : number) {
-    this.board.flipValue(x,y);
-    this.board.flipValue(x+1,y);
-    this.board.flipValue(x-1,y);
-    this.board.flipValue(x,y+1);
-    this.board.flipValue(x,y-1);
-
+  clickOnTile(x: number, y: number) {
+    this.board.flipValue(x, y);
+    this.board.flipValue(x + 1, y);
+    this.board.flipValue(x - 1, y);
+    this.board.flipValue(x, y + 1);
+    this.board.flipValue(x, y - 1);
+    this.turnCounter += 1;
     this.board.checkVictory();
+
+    if (this.board.getWin() == true && (this.turnCounter < this.bestScore || this.bestScore == 0 )){
+      this.bestScore = this.turnCounter;
+    }
   }
 }
 
-class Board {
-  private width = 5;
-  private height = 5;
-  private board : boolean[][];
-
-  constructor(width : number,height : number){
-    this.width = width;
-    this.height = height;
-
-    this.board = new Array(width);
-
-    for (let x = 0;x < this.width;x++){
-      this.board[x] = new Array(height);
-      for (let y = 0;y < this.height;y++){
-        //assign random value
-        if (Math.random()> 0.5){
-          this.board[x][y] = true;
-        }else {
-          this.board[x][y] = false;
-        }
-      }
-    }
-  }
-
-  getBoard(){
-    return this.board;
-  }
-
-  flipValue(x : number,y : number){
-
-    if (x >= 0 && x < this.width && y >= 0 && y < this.height ){
-      this.board[x][y] = !this.board[x][y]
-    }
-  }
-
-  checkVictory(){
-    let out = true;
-    for (let x = 0;x < this.width;x++){
-      for (let y = 0;y < this.height;y++){
-        if (this.board[x][y]){
-          out = false
-        }
-      }
-    }
-    return out;
-  }
-}
